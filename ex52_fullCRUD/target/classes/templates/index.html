@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Appointment Booking</title>
+<!-- Bootstrap CSS -->
+<link th:href = "@{/css/bootstrap.css}" rel="stylesheet" >
+</head>
+<body>
+
+<div class="tableWrapper bg-primary">
+	<h1 class="text-center" style="color:red;">Online Bookings</h1>
+	
+	<table class="table table-hover table-bordered text-center" th:if="${appointmentList != null AND appointmentList != ''}">
+		<tr>
+			<th>First Name</th>
+			<th>Email</th>
+			<th>Appointment Date</th>
+			<th>Appointment Name</th>
+			<th row-span="2">Actions</th>
+			<th row-span="2">Actions</th>
+		</tr>
+		
+		<tr th:each="a : ${appointmentList}">
+			<td th:text="${a.firstName}">Arianna</td>
+			<td th:text="${a.email}">arianna@arianna.com</td>
+			<td th:text="${a.appointmentDate}">2020-10-24</td>
+			<td th:text="${a.appointmentTime}">11:11:11</td>
+			<td><button style="background-color:red;"><a style="color:white;" th:href="@{/editAppointmentById/}+${a.id}">Edit</a></td>
+			<td><button style="background-color:powderblue;"><a style="color:white;" th:href="@{/deleteAppointmentById/}+${a.id}">Delete</a></button></td>
+		</tr>
+	</table>
+</div>
+	
+<div class="container">
+<div class="text-align:center"><h1>Edit Appointment</h1></div>
+	<form class="form-horizontal" method="post" action="" th:action="@{/insertAppointment}" th:object="${appointment}">
+		<div class="form-group">
+			<input type="hidden" name="id" required th:field="*{id}"/><br>
+			<label class="control-label col-sm-2" for="firstName">First Name:</label>
+			<input class="form-control" required id="firstName" placeholder="Enter first name" type="text" name="firstName" th:field="*{firstName}" /><br>
+			<label class="control-label col-sm-2" for="email">Email:</label>
+			<input type="email" class="form-control" required id="email" placeholder="Enter email" name="email" th:field="*{email}" /><br>
+			<label class="control-label col-sm-2" for="appointmentDate">Appointment Date:</label> 
+			<input class="form-control" id="appointmentDate" required type="date" name="appointmentDate" th:field="*{appointmentDate}" /><br>
+			<label class="control-label col-sm-2" for="appointmentTime">Appointment Time:</label>  
+			<input class="form-control" id="appointmentTime" required type="time" name="appointmentTime" th:field="*{appointmentTime}" /><br>
+			<input class="btn btn-primary" type="submit" value="Go!"/>
+		</div>
+	</form>
+</div>
+
+</body>
+</html>
